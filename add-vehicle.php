@@ -339,37 +339,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>إضافة سيارة للمزاد</title>
 
     <style>
+        :root {
+            --royal-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-white: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
         * {
-
             margin: 0;
-
             padding: 0;
-
             box-sizing: border-box;
-
         }
 
         body {
-
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-            background: #f5f5f5;
-
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background: #0f0c29;
             direction: rtl;
+            min-height: 100vh;
+        }
 
+        .dynamic-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(125deg, #0f0c29, #302b63, #24243e, #0f0c29);
+            background-size: 400% 400%;
+            animation: gradientFlow 20s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 0%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
         }
 
         .header {
-
-            background: #2563eb;
-
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
             color: white;
-
             padding: 20px 0;
-
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .container {
@@ -383,9 +401,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .header h1 {
-
             font-size: 1.5rem;
-
+            background: linear-gradient(135deg, #fff, #e0e7ff, #c7d2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .content {
@@ -395,15 +414,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .form-container {
-
-            background: white;
-
-            border-radius: 15px;
-
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
             padding: 40px;
-
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
         .form-title {
@@ -415,13 +431,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .form-title h2 {
-
-            color: #1e293b;
-
             font-size: 2rem;
-
+            font-weight: 900;
             margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGradient 3s ease infinite;
+        }
 
+        @keyframes titleGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .form-row {
@@ -443,35 +466,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .form-group label {
-
             display: block;
-
             margin-bottom: 8px;
-
-            color: #1e293b;
-
+            color: rgba(255, 255, 255, 0.9);
             font-weight: 600;
-
         }
 
         .form-group input,
-
         .form-group select,
-
         .form-group textarea {
-
             width: 100%;
-
             padding: 12px 15px;
-
-            border: 2px solid #e2e8f0;
-
-            border-radius: 8px;
-
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
             font-size: 1rem;
-
             transition: 0.3s;
-
+            color: white;
         }
 
         .form-group textarea {
@@ -507,37 +519,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .btn {
-
             width: 100%;
-
             padding: 14px;
-
-            background: #2563eb;
-
+            background: var(--royal-gradient);
             color: white;
-
             border: none;
-
-            border-radius: 8px;
-
+            border-radius: 15px;
             font-size: 1.1rem;
-
             font-weight: bold;
-
             cursor: pointer;
-
             transition: 0.3s;
-
             margin-top: 10px;
-
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
 
         .btn:hover {
-
-            background: #1d4ed8;
-
-            transform: translateY(-2px);
-
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
         }
 
         .alert {
@@ -571,21 +569,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .back-link {
-
             display: inline-block;
-
             margin-bottom: 20px;
-
-            color: #2563eb;
-
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-
+            transition: 0.3s;
         }
 
         .back-link:hover {
-
-            text-decoration: underline;
-
+            color: white;
+            transform: translateX(-5px);
         }
 
     </style>
@@ -594,16 +587,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 
+    <!-- الخلفية الديناميكية -->
+    <div class="dynamic-background"></div>
+
     <!-- Header -->
-
     <div class="header">
-
         <div class="container">
-
             <h1>🚗 مزادات السيارات</h1>
-
         </div>
-
     </div>
 
  
